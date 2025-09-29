@@ -26,6 +26,7 @@ namespace StudentLoginSystem
 
         }
 
+
         private void ChangePasswordLabel_Click(object sender, EventArgs e)
         {
             PasswordManagementForm passwordForm = new PasswordManagementForm(username);

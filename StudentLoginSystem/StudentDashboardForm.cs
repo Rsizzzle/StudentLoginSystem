@@ -40,6 +40,7 @@ namespace StudentLoginSystem
             this.Hide();
         }
 
+
         private void settingsLabel_Click(object sender, EventArgs e)
         {
             new SettingsForm(username).ShowDialog();

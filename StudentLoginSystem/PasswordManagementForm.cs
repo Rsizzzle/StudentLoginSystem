@@ -67,6 +67,7 @@ namespace StudentLoginSystem
                         frm.Close();
                 }
             }
+
             else
             {
                 MessageBox.Show("Error changing password.");

@@ -43,6 +43,7 @@ namespace StudentLoginSystem
                 new StudentDashboardForm(username).Show();
                 this.Hide();
             }
+
             else
             {
                 DatabaseHelper.IncrementLoginAttempt(username);
@@ -69,5 +70,11 @@ namespace StudentLoginSystem
         {
 
         }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
     }
 }
