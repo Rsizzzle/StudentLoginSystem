@@ -1,17 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace StudentLoginSystem
 {
     public partial class SignupForm : Form
     {
+        private string pendingEmail = "";
+        private string pendingOtp = "";
+        private DateTime otpExpiry;
         private string generatedOtp = "";
         public SignupForm()
         {
@@ -77,39 +88,35 @@ namespace StudentLoginSystem
             }
         }
 
+
         private void verifyOtpButton_Click(object sender, EventArgs e)
         {
-            string enteredOtp = otpTextBox.Text.Trim();
-            if (enteredOtp == generatedOtp)
+            if (otpTextBox.Text.Trim() == pendingOtp && DateTime.Now <= otpExpiry)
             {
-                MessageBox.Show("OTP verified! Please set your password.");
-                passwordTextBox.Enabled = true;
-                confirmPasswordTextBox.Enabled = true;
+                MessageBox.Show("OTP verified! You can now complete registration.");
                 signupButton.Enabled = true;
-                // Optionally disable email, username, OTP fields now
-                emailTextBox.Enabled = false;
-                usernameTextBox.Enabled = false;
-                verifyEmailButton.Enabled = false;
-                otpTextBox.Enabled = false;
-                verifyOtpButton.Enabled = false;
             }
             else
             {
-                MessageBox.Show("Invalid OTP.");
+                MessageBox.Show("Invalid or expired OTP.");
+                signupButton.Enabled = false;
             }
         }
 
-        private string GenerateSecureOtp()
+        private bool IsValidEmail(string email)
         {
-            var bytes = new byte[4];
-            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
+            try
             {
-                rng.GetBytes(bytes);
-                int value = BitConverter.ToInt32(bytes, 0);
-                value = Math.Abs(value % 900000) + 100000; // ensure 6 digits
-                return value.ToString();
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
             }
         }
+
+     
 
         private void verifyEmailButton_Click(object sender, EventArgs e)
         {
@@ -138,21 +145,41 @@ namespace StudentLoginSystem
             }
 
             // Generate 6-digit OTP
-            generatedOtp = new Random().Next(100000, 999999).ToString();
+            Random rnd = new Random();
+            pendingOtp = rnd.Next(100000, 999999).ToString();
+            otpExpiry = DateTime.Now.AddMinutes(10);
+            pendingEmail = email;
 
             try
             {
-                DatabaseHelper.SendOtpToEmail(email, generatedOtp);
-                otpTextBox.Enabled = true;
-                verifyOtpButton.Enabled = true;
-                MessageBox.Show("OTP sent to your email. Please check your inbox.");
+                SendEmailOtp(email, pendingOtp);
+                MessageBox.Show("OTP sent. Please check your email.");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to send OTP: " + ex.Message);
             }
+           
         }
+        private void SendEmailOtp(string email, string otp)
+        {
+            string senderEmail = "unitracksti@gmail.com";
+            string senderPassword = "mtwk vvzw mbde dzrz"; // Use app password for Gmail
 
+            MailMessage mail = new MailMessage();
+            mail.To.Add(emailTextBox.Text.Trim());
+            mail.Subject = "Your OTP Code - UniTrack";
+            mail.Body = $"Your OTP code is: {otp}. Expires in 10 minutes.";
+            mail.From = new MailAddress(senderEmail);
+
+            using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+            {
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new NetworkCredential(senderEmail, senderPassword);
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+            }
+        }
         private void confirmPasswordTextBox_TextChanged(object sender, EventArgs e)
         {
 
@@ -162,6 +189,16 @@ namespace StudentLoginSystem
         {
             new LoginForm().Show();
             this.Hide();
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void otpTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

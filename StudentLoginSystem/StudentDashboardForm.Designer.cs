@@ -45,19 +45,23 @@
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(377, 815);
+            this.panel1.Size = new System.Drawing.Size(510, 1002);
             this.panel1.TabIndex = 0;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.DarkGray;
             this.panel3.Controls.Add(this.settingsLabel);
             this.panel3.Controls.Add(this.logoutButton);
-            this.panel3.Location = new System.Drawing.Point(0, 772);
+            this.panel3.Location = new System.Drawing.Point(0, 950);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(377, 41);
+            this.panel3.Size = new System.Drawing.Size(503, 50);
             this.panel3.TabIndex = 2;
+            this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // settingsLabel
             // 
@@ -65,9 +69,10 @@
             this.settingsLabel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.settingsLabel.Font = new System.Drawing.Font("Palatino Linotype", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.settingsLabel.ForeColor = System.Drawing.Color.White;
-            this.settingsLabel.Location = new System.Drawing.Point(3, 10);
+            this.settingsLabel.Location = new System.Drawing.Point(4, 12);
+            this.settingsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.settingsLabel.Name = "settingsLabel";
-            this.settingsLabel.Size = new System.Drawing.Size(57, 18);
+            this.settingsLabel.Size = new System.Drawing.Size(71, 23);
             this.settingsLabel.TabIndex = 1;
             this.settingsLabel.Text = "Settings";
             this.settingsLabel.Click += new System.EventHandler(this.settingsLabel_Click);
@@ -78,9 +83,10 @@
             this.logoutButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.logoutButton.Font = new System.Drawing.Font("Palatino Linotype", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.logoutButton.ForeColor = System.Drawing.Color.White;
-            this.logoutButton.Location = new System.Drawing.Point(293, 9);
+            this.logoutButton.Location = new System.Drawing.Point(391, 11);
+            this.logoutButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.logoutButton.Name = "logoutButton";
-            this.logoutButton.Size = new System.Drawing.Size(75, 23);
+            this.logoutButton.Size = new System.Drawing.Size(100, 28);
             this.logoutButton.TabIndex = 1;
             this.logoutButton.Text = "LOGOUT";
             this.logoutButton.UseVisualStyleBackColor = false;
@@ -91,27 +97,32 @@
             this.panel2.BackColor = System.Drawing.Color.Yellow;
             this.panel2.Controls.Add(this.label1);
             this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(377, 49);
+            this.panel2.Size = new System.Drawing.Size(503, 60);
             this.panel2.TabIndex = 0;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(61, 9);
+            this.label1.Location = new System.Drawing.Point(81, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(263, 26);
+            this.label1.Size = new System.Drawing.Size(315, 32);
             this.label1.TabIndex = 0;
             this.label1.Text = "Welcome to your dashboard";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // StudentDashboardForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(377, 813);
+            this.ClientSize = new System.Drawing.Size(503, 1001);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "StudentDashboardForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "StudentDashboardForm";
